@@ -22,6 +22,10 @@
           at Array.forEach (native)
           at visitChildren (/std-esm-sandbox/esm/node_modules/nyc/node_modules/istanbul-lib-report/lib/tree.js:115:32)
 
+  NOTE: You can see this error if after running `npm test` you get a low test
+  coverage for `get-message.js` you open `coverage/index.html` and view the
+  source code for `get-message.js`.
+
 - If the `lcov` reporter is configured for `nyc`
 
       // .nycrc
