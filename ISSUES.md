@@ -1,7 +1,7 @@
 # When running `npm test` (uses `nyc`)
 
 - If the `cjs` `@std/esm` setting is not set to `true` when running `nyc` then
-  we get an error ( https://github.com/standard-things/esm/issues/28 ).
+  we get an error: https://github.com/standard-things/esm/issues/28
 
 - If the `lcov` reporter is configured for `nyc`
 
@@ -11,7 +11,10 @@
         "text-summary"
       ],
 
-  then the following error occurs
+  then running `nyc` the first time works just fine (delete your `.nyc_output`
+  and the `coverage` folders first), but every other time the following error
+  occurs (i.e. running `nyc` with an existing `.nyc_output` and `coverage`
+  folder from a previous run):
 
       undefined:5
           // "lcov",
