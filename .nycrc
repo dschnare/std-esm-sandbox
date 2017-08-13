@@ -1,4 +1,9 @@
 {
+  "check-coverage": false,
+  "instrument": true,
+  "reporter": [
+    "text-summary"
+  ],
   "include": [
     "src/**/*.js"
   ],
