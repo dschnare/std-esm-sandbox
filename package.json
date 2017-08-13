@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node -r @std/esm src/index",
-    "test": "nyc mocha -r @std/esm --opts mocha.opts",
+    "test": "nyc mocha -r @std/esm --opts .mocha.opts",
     "js:bundle": "node -r @std/esm ./node_modules/.bin/browserify src/index.js --debug -t uglifyify -p [ tsify ] | exorcist dist/bundle.js.map | uglifyjs -c  > dist/bundle.js",
     "js:bundle:dev": "node -r @std/esm ./node_modules/.bin/watchify src/index.js -p [ tsify ] --outfile dist/bundle.js"
   },
