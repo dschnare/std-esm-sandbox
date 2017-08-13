@@ -20,16 +20,16 @@
     "@std/esm": "0.2.1"
   },
   "devDependencies": {
-    "@types/mocha": "^2.2.41",
+    "@types/mocha": "2.2.41",
     "@types/node": "8.0.20",
     "browserify": "14.4.0",
-    "exorcist": "^0.4.0",
-    "mocha": "^3.5.0",
-    "nyc": "^11.1.0",
+    "exorcist": "0.4.0",
+    "mocha": "3.5.0",
+    "nyc": "11.1.0",
     "tsify": "3.0.1",
     "typescript": "2.4.2",
-    "uglify-js": "^3.0.27",
-    "uglifyify": "^4.0.3",
-    "watchify": "^3.9.0"
+    "uglify-js": "3.0.27",
+    "uglifyify": "4.0.3",
+    "watchify": "3.9.0"
   }
 }
