@@ -2,7 +2,6 @@
   "check-coverage": false,
   "instrument": true,
   "reporter": [
-    "lcov",
     "text-summary"
   ],
   "include": [

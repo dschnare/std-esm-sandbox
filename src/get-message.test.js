@@ -1,4 +1,4 @@
-import assert from 'assert'
+import * as assert from 'assert'
 import getMessage from './get-message'
 
 describe('get-message', function () {
