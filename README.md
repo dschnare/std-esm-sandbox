@@ -14,7 +14,7 @@ the browser.
 
 To build for the browser
 
-    npm run js:compile
+    npm run js:bundle
 
 ## Known Issues
 
