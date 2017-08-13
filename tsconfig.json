@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "allowJs": true,
+    "checkJs": true,
+    "noImplicitAny": false,
+    "outDir": "dist"
+  },
+  "include": [
+    "src"
+  ]
+}
