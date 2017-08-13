@@ -15,3 +15,8 @@ the browser.
 To build for the browser
 
     npm run js:compile
+
+## Known Issues
+
+See the [ISSUES.md](./ISSUES.md) for a list of known issues and their
+workarounds.
