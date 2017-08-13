@@ -16,16 +16,18 @@
   occurs (i.e. running `nyc` with an existing `.nyc_output` and `coverage`
   folder from a previous run):
 
-      undefined:5
-          // "lcov",
-          ^
-      SyntaxError: Unexpected token / in JSON at position 71    at Object.parse (native)
-          at Object.Config.loadConfig (/std-esm-sandbox/esm/node_modules/nyc/lib/config-util.js:21:21)
-          at Object.<anonymous> (/std-esm-sandbox/esm/node_modules/nyc/bin/nyc.js:23:25)
-          at Module._compile (module.js:570:32)
-          at Object.Module._extensions..js (module.js:579:10)
-          at Module.load (module.js:487:32)
-          at tryModuleLoad (module.js:446:12)
-          at Function.Module._load (module.js:438:3)
-          at Module.runMain (module.js:604:10)
-          at run (bootstrap_node.js:394:7)
+        /std-esm-sandbox/esm/node_modules/nyc/node_modules/istanbul-reports/lib/lcovonly/index.js:32
+        writer.println('FN:' + [meta.decl.start.line, meta.name].join(','));
+                                    ^
+
+        TypeError: Cannot read property 'decl' of undefined
+            at /std-esm-sandbox/esm/node_modules/nyc/node_modules/istanbul-reports/lib/lcovonly/index.js:32:37
+            at Array.forEach (native)
+            at LcovOnlyReport.onDetail (/std-esm-sandbox/esm/node_modules/nyc/node_modules/istanbul-reports/lib/lcovonly/index.js:30:28)
+            at LcovReport.(anonymous function) [as onDetail] (/std-esm-sandbox/esm/node_modules/nyc/node_modules/istanbul-reports/lib/lcov/index.js:21:24)
+            at Visitor.(anonymous function) [as onDetail] (/std-esm-sandbox/esm/node_modules/nyc/node_modules/istanbul-lib-report/lib/tree.js:34:30)
+            at ReportNode.Node.visit (/std-esm-sandbox/esm/node_modules/nyc/node_modules/istanbul-lib-report/lib/tree.js:123:17)
+            at /std-esm-sandbox/esm/node_modules/nyc/node_modules/istanbul-lib-report/lib/tree.js:116:23
+            at Array.forEach (native)
+            at visitChildren (/std-esm-sandbox/esm/node_modules/nyc/node_modules/istanbul-lib-report/lib/tree.js:115:32)
+            at ReportNode.Node.visit (/std-esm-sandbox/esm/node_modules/nyc/node_modules/istanbul-lib-report/lib/tree.js:126:5)
