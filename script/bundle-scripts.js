@@ -19,8 +19,6 @@ const entries = [
 ]
 // The file to write
 const outFile = 'dist/static/bundle.js'
-// The source map file to write if debug is true
-const outSourceMapFile = 'dist/static/bundle.js.map'
 
 export default function bundleScripts ({ debug = false, minify = false, watch = false } = {}) {
   const b = browserify({
@@ -58,7 +56,7 @@ export default function bundleScripts ({ debug = false, minify = false, watch = 
 
   return [
     path.dirname(outFile),
-    path.dirname(outSourceMapFile)
+    path.dirname(outFile + '.map')
   ].reduce((p, d) => {
     return p.then(() => mkdir(d))
   }, Promise.resolve()).then(() => bundle()).then(() => emitter)
@@ -69,7 +67,7 @@ export default function bundleScripts ({ debug = false, minify = false, watch = 
       let resolved = false
 
       if (debug) {
-        p = p.pipe(exorcist(outSourceMapFile))
+        p = p.pipe(exorcist(outFile + '.map'))
       }
 
       p.pipe(fs.createWriteStream(outFile, 'utf8'))
@@ -83,7 +81,7 @@ export default function bundleScripts ({ debug = false, minify = false, watch = 
           if (!resolved) {
             resolved = true
             if (minify) {
-              uglify(outFile, debug ? outSourceMapFile : null)
+              uglify(outFile, debug ? outFile + '.map' : null)
                 .then(() => resolve(), reject)
             } else {
               resolve()
