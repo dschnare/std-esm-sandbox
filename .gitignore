@@ -3,4 +3,5 @@ node_modules
 .esm-cache
 .nyc_output
 coverage
+coverage.lcov
 dist

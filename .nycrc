@@ -1,15 +1,19 @@
 {
-  "check-coverage": false,
   "reporter": [
     "html",
     "text",
     "text-summary"
   ],
   "include": [
-    "src/**/*.js"
+    "lib/**/*.js"
   ],
   "exclude": [
-    "src/**/*.test.js"
+    "lib/**/*.test.js"
   ],
-  "all": true
+  "require": [
+    "@std/esm",
+    "./script/require-all"
+  ],
+  "check-coverage": false,
+  "cache": true
 }

@@ -2,12 +2,13 @@
   "name": "std-esm-sandbox",
   "version": "0.0.1",
   "description": "",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
-    "start": "node -r @std/esm src/index",
-    "test": "nyc mocha -r @std/esm --opts .mocha.opts",
-    "js:bundle": "node -r @std/esm ./node_modules/.bin/browserify src/index.js --debug -t uglifyify -p [ tsify ] | exorcist dist/bundle.js.map | uglifyjs -c  > dist/bundle.js",
-    "js:bundle:dev": "node -r @std/esm ./node_modules/.bin/watchify src/index.js -p [ tsify ] --outfile dist/bundle.js"
+    "start": "node lib/index",
+    "test": "nyc mocha --opts .mocha.opts",
+    "coverage": "nyc report --reporter text-lcov > coverage.lcov",
+    "js:bundle": "browserify lib/index.js --debug -t uglifyify -p [ tsify ] | exorcist dist/bundle.js.map | uglifyjs -c  > dist/bundle.js",
+    "js:bundle:dev": "watchify lib/index.js --debug -p [ tsify ] --outfile dist/bundle.js"
   },
   "@std/esm": {
     "esm": "all",
@@ -23,7 +24,9 @@
     "@types/mocha": "2.2.41",
     "@types/node": "8.0.20",
     "browserify": "14.4.0",
+    "chalk": "2.1.0",
     "exorcist": "0.4.0",
+    "glob": "7.1.2",
     "mocha": "3.5.0",
     "nyc": "11.1.0",
     "tsify": "3.0.1",
