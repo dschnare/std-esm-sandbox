@@ -2,13 +2,15 @@
   "name": "std-esm-sandbox",
   "version": "0.0.1",
   "description": "",
-  "main": "lib/index.js",
+  "main": "lib/main.js",
   "scripts": {
-    "start": "node lib/index",
+    "start": "node lib/main.js",
     "test": "nyc mocha --opts .mocha.opts",
     "coverage": "nyc report --reporter text-lcov > coverage.lcov",
-    "js:bundle": "browserify lib/index.js --debug -t uglifyify -p [ tsify ] | exorcist dist/bundle.js.map | uglifyjs -c  > dist/bundle.js",
-    "js:bundle:dev": "watchify lib/index.js --debug -p [ tsify ] --outfile dist/bundle.js"
+    "scripts:bundle": "node -r @std/esm script/bundle-scripts --minify",
+    "scripts:bundle:dev": "node -r @std/esm script/bundle-scripts --debug --watch",
+    "copy": "node -r @std/esm script/copy",
+    "clean": "node -r @std/esm script/clean"
   },
   "@std/esm": {
     "esm": "all",
@@ -18,17 +20,20 @@
   "author": "Darren Schnare <schnare.d@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "@std/esm": "0.2.1"
+    "@std/esm": "0.2.2"
   },
   "devDependencies": {
     "@types/mocha": "2.2.41",
     "@types/node": "8.0.20",
     "browserify": "14.4.0",
     "chalk": "2.1.0",
+    "copy": "0.3.0",
     "exorcist": "0.4.0",
     "glob": "7.1.2",
+    "mkdirp": "0.5.1",
     "mocha": "3.5.0",
     "nyc": "11.1.0",
+    "rimraf": "2.6.1",
     "tsify": "3.0.1",
     "typescript": "2.4.2",
     "uglify-js": "3.0.27",

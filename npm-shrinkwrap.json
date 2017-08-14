@@ -1,0 +1,11 @@
+{
+  "name": "std-esm-sandbox",
+  "version": "0.0.1",
+  "dependencies": {
+    "@std/esm": {
+      "version": "0.2.2",
+      "from": "@std/esm@latest",
+      "resolved": "https://registry.npmjs.org/@std/esm/-/esm-0.2.2.tgz"
+    }
+  }
+}

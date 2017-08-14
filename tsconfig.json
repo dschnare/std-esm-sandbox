@@ -4,9 +4,12 @@
     "allowJs": true,
     "checkJs": true,
     "noImplicitAny": false,
-    "outDir": "dist"
+    "moduleResolution": "node",
+    "jsx": "react",
+    "reactNamespace": "React",
+    "outDir": "dist/lib"
   },
   "include": [
-    "src"
+    "lib"
   ]
 }
