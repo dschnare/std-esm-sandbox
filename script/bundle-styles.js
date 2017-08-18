@@ -1,3 +1,7 @@
+/*
+A module/command line tool that bundles the client styles in the project.
+*/
+
 import * as path from 'path'
 import * as fs from 'fs'
 import mkdirp from 'mkdirp'
