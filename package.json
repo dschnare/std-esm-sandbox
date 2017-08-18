@@ -7,8 +7,9 @@
     "start": "node lib/main.js",
     "test": "nyc mocha --opts .mocha.opts",
     "coverage": "nyc report --reporter text-lcov > coverage.lcov",
-    "scripts:bundle": "node -r @std/esm script/bundle-scripts --minify",
-    "scripts:bundle:dev": "node -r @std/esm script/bundle-scripts --debug --watch",
+    "bundle:scripts": "node -r @std/esm script/bundle-scripts --minify",
+    "bundle:scripts:dev": "node -r @std/esm script/bundle-scripts --debug --watch",
+    "bundle:styles": "node -r @std/esm script/bundle-styles --minify --debug",
     "copy": "node -r @std/esm script/copy",
     "clean": "node -r @std/esm script/clean"
   },
@@ -20,18 +21,21 @@
   "author": "Darren Schnare <schnare.d@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "@std/esm": "0.2.2"
+    "@std/esm": "0.5.1"
   },
   "devDependencies": {
     "@types/mocha": "2.2.41",
-    "@types/node": "8.0.20",
+    "@types/node": "8.0.24",
     "browserify": "14.4.0",
     "chalk": "2.1.0",
+    "clean-css": "4.1.7",
     "copy": "0.3.0",
     "exorcist": "0.4.0",
     "glob": "7.1.2",
+    "less": "2.7.2",
     "mkdirp": "0.5.1",
     "mocha": "3.5.0",
+    "node-sass": "4.5.3",
     "nyc": "11.1.0",
     "rimraf": "2.6.1",
     "tsify": "3.0.1",

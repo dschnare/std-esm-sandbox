@@ -13,20 +13,56 @@ import uglifyify from 'uglifyify'
 import UglifyJs from 'uglify-js'
 import mkdirp from 'mkdirp'
 
-// Entry files to include in the bundle (and their deps)
-const entries = [
-  './lib/index.js'
+/*
+The bundle targets where a target object has the following shape
+{
+  outFile: string,
+  entries?: string[], // Expected if require is not specified
+  external?: Array<string>,
+  require?: Array<string | { file: string, expose?: boolean }>,
+  ignore?: string[],
+  exclude?: string[]
+}
+*/
+const targets = [
+  {
+    outFile: 'dist/static/bundle.js',
+    // Entry files to include in the bundle (and their deps)
+    entries: [ './lib/index.js' ]
+  }
 ]
-// The file to write
-const outFile = 'dist/static/bundle.js'
 
-export default function bundleScripts ({ debug = false, minify = false, watch = false } = {}) {
+function bundleTarget (target, { debug = false, minify = false, watch = false } = {}) {
+  const { entries, outFile, external, require, ignore, exclude } = target
+
+  if (!outFile || typeof outFile !== 'string') {
+    throw new Error('Target outFile invalid: outFile = ' + outFile)
+  }
+
   const b = browserify({
     debug,
-    entries,
     cache: {},
     packageCache: {}
   })
+
+  if (Array.isArray(require)) {
+    require.forEach(x => {
+      b.require(x)
+    })
+  } else if (Array.isArray(external)) {
+    b.add(entries)
+    b.external(external)
+  } else {
+    b.add(entries)
+  }
+
+  if (Array.isArray(ignore)) {
+    b.ignore(ignore)
+  }
+
+  if (Array.isArray(exclude)) {
+    b.exclude(exclude)
+  }
 
   b.plugin(tsify)
 
@@ -141,24 +177,41 @@ function uglify (sourceFile, sourceMapFile = null) {
   })
 }
 
+export default function bundleScripts ({ minify, debug, watch } = {}) {
+  return Promise.all(
+    targets.map(t => {
+      const start = new Date()
+      console.log(
+        '[', t.outFile, ']', 'bundle-scripts started'
+      )
+
+      return bundleTarget(t, { minify, debug, watch }).then(emitter => {
+        const dt = new Date() - start
+        const seconds = (dt / 1000).toFixed(2)
+
+        console.log(
+          '[', t.outFile, ']', 'bundle-scripts completed in', seconds, 'seconds'
+        )
+
+        emitter.on('complete', dt => {
+          const seconds = (dt / 1000).toFixed(2)
+          console.log(
+            '[', t.outFile, ']', 'bundle-scripts completed in', seconds, 'seconds'
+          )
+        })
+        emitter.on('error', error => {
+          console.error(error)
+        })
+      })
+    })
+  )
+}
+
 // Usage: bundle-scripts [--minify] [--watch] [--debug]
 if (require.main === module) {
-  const start = new Date()
   bundleScripts({
     debug: process.argv.includes('--debug'),
     minify: process.argv.includes('--minify'),
     watch: process.argv.includes('--watch')
-  }).then(emitter => {
-    const dt = new Date() - start
-    const seconds = (dt / 1000).toFixed(2)
-    console.log('bundle-scripts completed in', seconds, 'seconds')
-
-    emitter.on('complete', dt => {
-      const seconds = (dt / 1000).toFixed(2)
-      console.log('bundle-scripts completed in', seconds, 'seconds')
-    })
-    emitter.on('error', error => {
-      console.error(error)
-    })
   }).catch(error => console.error(error))
 }
