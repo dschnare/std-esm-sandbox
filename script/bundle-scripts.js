@@ -202,6 +202,8 @@ export default function bundleScripts ({ minify, debug, watch } = {}) {
         emitter.on('error', error => {
           console.error(error)
         })
+
+        return emitter
       })
     })
   )
