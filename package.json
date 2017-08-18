@@ -5,6 +5,8 @@
   "main": "lib/main.js",
   "scripts": {
     "start": "node lib/main.js",
+    "stop": "node -e 'try { process.kill(parseInt(fs.readFileSync(`pid`))) } catch (_) { }'",
+    "poststop": "node -e 'try { fs.unlinkSync(`pid`) } catch (_) { }'",
     "test": "nyc mocha --opts .mocha.opts",
     "coverage": "nyc report --reporter text-lcov > coverage.lcov",
     "bundle:scripts": "node -r @std/esm script/bundle-scripts --minify",
