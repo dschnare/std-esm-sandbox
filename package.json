@@ -9,7 +9,7 @@
     "coverage": "nyc report --reporter text-lcov > coverage.lcov",
     "bundle:scripts": "node -r @std/esm script/bundle-scripts --minify",
     "bundle:scripts:dev": "node -r @std/esm script/bundle-scripts --debug --watch",
-    "bundle:styles": "node -r @std/esm script/bundle-styles --minify --debug",
+    "bundle:styles": "node -r @std/esm script/bundle-styles --minify",
     "copy": "node -r @std/esm script/copy",
     "clean": "node -r @std/esm script/clean"
   },
