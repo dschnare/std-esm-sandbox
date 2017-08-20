@@ -32,7 +32,6 @@
     "@types/mocha": "2.2.41",
     "@types/node": "8.0.24",
     "browserify": "14.4.0",
-    "chalk": "2.1.0",
     "clean-css": "4.1.7",
     "consolidate": "0.14.5",
     "copy": "0.3.0",
