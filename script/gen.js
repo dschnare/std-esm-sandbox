@@ -37,14 +37,14 @@ export function renderTemplate (templatePath, locals) {
   return stat(templatePath).then(stats => {
     if (stats.isDirectory()) {
       return Promise.all([
-        loadContext(templatePath, templatePath, locals),
+        loadContext(path.dirname(templatePath), templatePath, locals),
         templatePath
       ]).then(([ context, srcBase ]) => {
         return renderTemplateDirectory(templatePath, context)
       })
     } else if (stats.isFile()) {
       return Promise.all([
-        loadContext(templatePath, path.dirname(templatePath), locals),
+        loadContext(path.dirname(templatePath), path.dirname(templatePath), locals),
         path.dirname(templatePath)
       ]).then(([ context, srcBase ]) => {
         return renderTemplateFile(templatePath, context).then(r => [ r ])
@@ -96,7 +96,7 @@ function renderTemplateDirectory (dirPath, context) {
               return results.concat(r)
             })
           } else {
-            return loadContext(file, context.config.srcBase, context.locals).then(ctx => {
+            return loadContext(path.dirname(file), context.config.srcBase, context.locals).then(ctx => {
               ctx = deepExtend({}, context, ctx)
               return renderTemplateFile(file, ctx).then(r => {
                 return results.concat(r)
