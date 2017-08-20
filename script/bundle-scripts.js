@@ -80,9 +80,9 @@ function bundleTarget (target, { debug = false, minify = false, watch = false } 
   const emitter = new EventEmitter()
 
   b.on('update', () => {
-    const s = new Date()
+    const s = new Date().getTime()
     bundle().then(() => {
-      const dt = new Date() - s
+      const dt = new Date().getTime() - s
       emitter.emit('complete', dt)
     }).catch(error => {
       emitter.emit('error', error)
@@ -177,16 +177,16 @@ function uglify (sourceFile, sourceMapFile = null) {
   })
 }
 
-export default function bundleScripts ({ minify, debug, watch } = {}) {
+export default function bundleScripts ({ minify = false, debug = false, watch = false } = {}) {
   return Promise.all(
     targets.map(t => {
-      const start = new Date()
+      const start = new Date().getTime()
       console.log(
         '[', t.outFile, ']', 'bundle-scripts started'
       )
 
       return bundleTarget(t, { minify, debug, watch }).then(emitter => {
-        const dt = new Date() - start
+        const dt = new Date().getTime() - start
         const seconds = (dt / 1000).toFixed(2)
 
         console.log(

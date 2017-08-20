@@ -12,9 +12,9 @@ nyc does not load modules in the same fashion when the nyc `all` settings is
 set to true. So instead we manually require all source modules ourselves.
 */
 
+import * as fs from 'fs'
+import * as path from 'path'
 import glob from 'glob'
-import fs from 'fs'
-import path from 'path'
 
 const libDir = 'lib'
 const files = glob.sync('**/*.js', {
