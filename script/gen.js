@@ -36,19 +36,13 @@ import deepExtend from 'deep-extend'
 export function renderTemplate (templatePath, locals) {
   return stat(templatePath).then(stats => {
     if (stats.isDirectory()) {
-      return Promise.all([
-        loadContext(path.dirname(templatePath), templatePath, locals),
-        templatePath
-      ]).then(([ context, srcBase ]) => {
-        return renderTemplateDirectory(templatePath, context)
-      })
+      return renderTemplateDirectory(templatePath, templatePath, locals)
     } else if (stats.isFile()) {
-      return Promise.all([
-        loadContext(path.dirname(templatePath), path.dirname(templatePath), locals),
-        path.dirname(templatePath)
-      ]).then(([ context, srcBase ]) => {
-        return renderTemplateFile(templatePath, context).then(r => [ r ])
-      })
+      const context = {
+        config: { srcBase: path.dirname(templatePath) },
+        locals
+      }
+      return renderTemplateFile(templatePath, context).then(r => [ r ])
     } else {
       return Promise.reject(new Error('Unsupported template: ' + templatePath))
     }
@@ -79,10 +73,11 @@ function stat (fileName) {
  * Recursively renders all templates in a directory.
  *
  * @param {string} dirPath The directory to render
- * @param {{ config: { basePath?: string, srcBase: string, destPaths?: { [fileName:string]: string } }, locals: Object }} context The context to render with
+ * @param {string} srcBase The src base directory
+ * @param {Object} locals The locals object
  * @return {Promise<{ text?: string, path: string, context: { config: { basePath?: string, srcBase: string, destPaths?: { [fileName:string]: string } }, locals: Object }, format: string, extname: string }[]>}
  */
-function renderTemplateDirectory (dirPath, context) {
+function renderTemplateDirectory (dirPath, srcBase, locals) {
   return readdir(dirPath).then(files => {
     files = files.filter(f => f !== '.context.json' && f !== '.context.js')
 
@@ -92,12 +87,11 @@ function renderTemplateDirectory (dirPath, context) {
       return p.then(results => {
         return stat(file).then(stats => {
           if (stats.isDirectory()) {
-            return renderTemplateDirectory(file, context).then(r => {
+            return renderTemplateDirectory(file, srcBase, locals).then(r => {
               return results.concat(r)
             })
           } else {
-            return loadContext(path.dirname(file), context.config.srcBase, context.locals).then(ctx => {
-              ctx = deepExtend({}, context, ctx)
+            return loadContext(dirPath, srcBase, locals).then(ctx => {
               return renderTemplateFile(file, ctx).then(r => {
                 return results.concat(r)
               })
