@@ -12,8 +12,8 @@ import deepExtend from 'deep-extend'
 
 /**
  * Attempts to render a generator template with the specified context object.
- * Each property on the context object will be accessible to the template being
- * rendered as a global property.
+ * Each property on the context's local object will be accessible to the
+ * template being rendered as a global property.
  *
  * If the template name is a directory then every file in the directory will be
  * rendered as a template.
@@ -353,7 +353,7 @@ function generateContextFileLocations (cwd, srcBase) {
     ...baseNames.map(b => path.join(cwd, b))
   )
 
-  while (cwd !== srcBase && cwd.length > srcBase.length) {
+  while (cwd && cwd !== srcBase && cwd.length > srcBase.length) {
     cwd = path.dirname(cwd)
     locations.push(
       ...baseNames.map(b => path.join(cwd, b))
