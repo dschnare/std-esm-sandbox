@@ -33,10 +33,12 @@ function doCopy (patterns, dest) {
   })
 }
 
+// The CLI
+// Usage: copy
 if (require.main === module) {
-  const start = new Date()
+  const start = new Date().getTime()
   cp().then(() => {
-    const dt = new Date() - start
+    const dt = new Date().getTime() - start
     const seconds = (dt / 1000).toFixed(2)
     console.log('copy task completed in', seconds, 'seconds')
   }).catch(error => console.error(error))

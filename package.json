@@ -6,14 +6,17 @@
   "scripts": {
     "start": "node lib/main.js",
     "stop": "node -e 'try { process.kill(parseInt(fs.readFileSync(`pid`))) } catch (_) { }'",
+    "predev": "npm stop",
+    "dev": "NODE_ENV=development npm start &",
     "poststop": "node -e 'try { fs.unlinkSync(`pid`) } catch (_) { }'",
-    "test": "nyc mocha --opts .mocha.opts",
+    "test": "NODE_ENV=testing nyc mocha --opts .mocha.opts",
     "coverage": "nyc report --reporter text-lcov > coverage.lcov",
     "bundle:scripts": "node -r @std/esm script/bundle-scripts --minify",
     "bundle:scripts:dev": "node -r @std/esm script/bundle-scripts --debug --watch",
     "bundle:styles": "node -r @std/esm script/bundle-styles --minify",
     "copy": "node -r @std/esm script/copy",
-    "clean": "node -r @std/esm script/clean"
+    "clean": "node -r @std/esm script/clean",
+    "gen": "node -r @std/esm script/gen"
   },
   "@std/esm": {
     "esm": "all",
@@ -31,7 +34,10 @@
     "browserify": "14.4.0",
     "chalk": "2.1.0",
     "clean-css": "4.1.7",
+    "consolidate": "0.14.5",
     "copy": "0.3.0",
+    "deep-extend": "0.5.0",
+    "ejs": "2.5.7",
     "exorcist": "0.4.0",
     "glob": "7.1.2",
     "less": "2.7.2",

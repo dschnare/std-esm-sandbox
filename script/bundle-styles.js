@@ -5,9 +5,9 @@ A module/command line tool that bundles the client styles in the project.
 import * as path from 'path'
 import * as fs from 'fs'
 import mkdirp from 'mkdirp'
-import * as sass from 'node-sass'
+import sass from 'node-sass'
 import CleanCss from 'clean-css'
-import * as less from 'less'
+import less from 'less'
 
 const targets = [
   {
@@ -172,6 +172,7 @@ export default function bundleStyles ({ minify = false, sourceMap = false } = {}
   )
 }
 
+// The CLI
 // Usage: bundle-styes [--minify] [--debug]
 if (require.main === module) {
   bundleStyles({

@@ -7,9 +7,13 @@
     "moduleResolution": "node",
     "jsx": "react",
     "reactNamespace": "React",
+    "lib": [
+      "es2016"
+    ],
     "outDir": "dist/lib"
   },
   "include": [
-    "lib"
+    "lib",
+    "script"
   ]
 }

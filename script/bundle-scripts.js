@@ -4,7 +4,7 @@ A module/command line tool that bundles the client scripts in the project.
 
 import * as fs from 'fs'
 import * as path from 'path'
-import EventEmitter from 'events'
+import * as EventEmitter from 'events'
 import browserify from 'browserify'
 import tsify from 'tsify'
 import watchify from 'watchify'
@@ -209,6 +209,7 @@ export default function bundleScripts ({ minify, debug, watch } = {}) {
   )
 }
 
+// The CLI
 // Usage: bundle-scripts [--minify] [--watch] [--debug]
 if (require.main === module) {
   bundleScripts({
