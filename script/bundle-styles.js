@@ -161,7 +161,7 @@ export default function bundleStyles ({ minify = false, sourceMap = false } = {}
         .then(compileResult => {
           return bundleTarget(compileResult, t.outFile, { minify, sourceMap })
         }).then(() => {
-          const dt = new Date() - start
+          const dt = new Date().getTime() - start
           const seconds = (dt / 1000).toFixed(2)
 
           console.log(
