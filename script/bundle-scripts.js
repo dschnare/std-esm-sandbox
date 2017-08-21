@@ -40,6 +40,7 @@ function bundleTarget (target, { debug = false, minify = false, watch = false } 
   }
 
   const b = browserify({
+    entries,
     debug,
     cache: {},
     packageCache: {}
@@ -47,13 +48,12 @@ function bundleTarget (target, { debug = false, minify = false, watch = false } 
 
   if (Array.isArray(require)) {
     require.forEach(x => {
-      b.require(x)
+      b.require(x.file || x, x.opts || undefined)
     })
-  } else if (Array.isArray(external)) {
-    b.add(entries)
+  }
+
+  if (Array.isArray(external)) {
     b.external(external)
-  } else {
-    b.add(entries)
   }
 
   if (Array.isArray(ignore)) {
@@ -177,7 +177,7 @@ function uglify (sourceFile, sourceMapFile = null) {
   })
 }
 
-export default function bundleScripts ({ minify = false, debug = false, watch = false } = {}) {
+export default function bundleTargets (targets, { minify = false, debug = false, watch = false } = {}) {
   return Promise.all(
     targets.map(t => {
       const start = new Date().getTime()
@@ -212,7 +212,7 @@ export default function bundleScripts ({ minify = false, debug = false, watch = 
 // The CLI
 // Usage: bundle-scripts [--minify] [--watch] [--debug]
 if (require.main === module) {
-  bundleScripts({
+  bundleTargets(targets, {
     debug: process.argv.includes('--debug'),
     minify: process.argv.includes('--minify'),
     watch: process.argv.includes('--watch')

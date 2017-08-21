@@ -91,7 +91,7 @@ function compile (entries, outFile, { includePaths = [], sourceMap = false } = {
   )
 }
 
-function bundleTarget (compileResult, outFile, { minify = false, sourceMap = false } = {}) {
+function bundle (compileResult, outFile, { minify = false, sourceMap = false } = {}) {
   const css = new CleanCss({
     format: minify ? false : 'beautify',
     inline: [ 'local' ],
@@ -149,7 +149,7 @@ function bundleTarget (compileResult, outFile, { minify = false, sourceMap = fal
     })
 }
 
-export default function bundleStyles ({ minify = false, sourceMap = false } = {}) {
+export default function bundleTargets (targets, { minify = false, sourceMap = false } = {}) {
   return Promise.all(
     targets.map(t => {
       const start = new Date().getTime()
@@ -159,7 +159,7 @@ export default function bundleStyles ({ minify = false, sourceMap = false } = {}
 
       return compile(t.entries, t.outFile, { includePaths: t.includePaths, sourceMap })
         .then(compileResult => {
-          return bundleTarget(compileResult, t.outFile, { minify, sourceMap })
+          return bundle(compileResult, t.outFile, { minify, sourceMap })
         }).then(() => {
           const dt = new Date().getTime() - start
           const seconds = (dt / 1000).toFixed(2)
@@ -175,7 +175,7 @@ export default function bundleStyles ({ minify = false, sourceMap = false } = {}
 // The CLI
 // Usage: bundle-styes [--minify] [--debug]
 if (require.main === module) {
-  bundleStyles({
+  bundleTargets(targets, {
     minify: process.argv.includes('--minify'),
     sourceMap: process.argv.includes('--debug')
   }).catch(error => console.error(error))
